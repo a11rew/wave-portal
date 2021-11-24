@@ -1,27 +1,30 @@
 import { ethers } from "ethers";
-import abi from "./utils/WavePortal.json";
+import { contractABI, contractAddress } from "./utils/contractData";
 import useIsWalletConnected from "./hooks/useIsWalletConnected";
-
-const contractAddress = "0x55540700996E144C5f7C7D64Ae1dA4b9798F9549";
-const contractABI = abi.abi;
+import useWaves from "./hooks/useWaves";
 
 function App() {
-  const { currentAccount, connectWallet } = useIsWalletConnected();
+  const { currentAccount, connectWallet, isLoading } = useIsWalletConnected();
+  const { waves } = useWaves();
 
+  console.log(waves);
   return (
     <div className="flex justify-center w-full mt-16">
       <div className="flex flex-col justify-center max-w-2xl">
         <div className="text-center text-4xl">👋 Hey there!</div>
 
-        <div className="text-center text-gray-500 mt-4">
+        <div className="text-center mt-4">
           I'm Andrew and I'm getting started with Web3
         </div>
-        <button className="mt-4 p-2 rounded-md bg-gray-300" onClick={wave}>
+        <button
+          className="mt-4 p-2 rounded-md text-black bg-gray-300"
+          onClick={wave}
+        >
           Wave at Me
         </button>
-        {!currentAccount && (
+        {!currentAccount && !isLoading && (
           <button
-            className="mt-4 p-2 rounded-md bg-gray-300"
+            className="mt-4 p-2 rounded-md bg-gray-300 text-black"
             onClick={connectWallet}
           >
             Connect Wallet
@@ -51,7 +54,7 @@ const wave = async () => {
       console.log("Retrieved total wave count...", count.toNumber());
 
       // Execute contract wave method
-      const waveTxn = await wavePortalContract.wave();
+      const waveTxn = await wavePortalContract.wave("Test wave");
       console.log("Mining... ", waveTxn.hash);
 
       await waveTxn.wait();
