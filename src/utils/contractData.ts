@@ -2,7 +2,7 @@ import abi from "./WavePortal.json";
 
 // General contract info
 
-const contractAddress = "0xB1e48967c81BCaEECfa67cf0409A9b3C73b77c8C";
+const contractAddress = "0x5B7F33a31FFB3F608B053fC53E47b354a3F0Bb51";
 const contractABI = abi.abi;
 
 export { contractAddress, contractABI };
