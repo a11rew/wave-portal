@@ -13,10 +13,10 @@ const useWaves = () => {
   const [allWaves, setAllWaves] = useState<Wave[]>([]);
   const [isLoading, setIsLoading] = useState<Boolean>(true);
 
+  const { ethereum } = window;
+
   useEffect(() => {
     try {
-      const { ethereum } = window;
-
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum as any);
         const signer = provider.getSigner();
@@ -27,18 +27,14 @@ const useWaves = () => {
         ) as WavePortal;
 
         // Call the getAllWaves method from contract
-
         wavePortalContract.getAllWaves().then((waves) => {
-          waves.forEach((wave) => {
-            setAllWaves([
-              ...allWaves,
-              {
-                address: wave.waver,
-                timestamp: new Date(wave.timestamp.toNumber() * 1000),
-                message: wave.message,
-              },
-            ]);
-          });
+          setAllWaves(
+            waves.map((wave) => ({
+              address: wave.waver,
+              timestamp: new Date(wave.timestamp.toNumber() * 1000),
+              message: wave.message,
+            }))
+          );
           setIsLoading(false);
         });
       } else {
@@ -49,9 +45,34 @@ const useWaves = () => {
       console.log(err);
       setIsLoading(false);
     }
-  }, []);
+  }, [ethereum]);
 
-  return { waves: allWaves, isLoading };
+  const wave = async () => {
+    try {
+      if (ethereum) {
+        const provider = new ethers.providers.Web3Provider(ethereum as any);
+        const signer = provider.getSigner();
+        const wavePortalContract = new ethers.Contract(
+          contractAddress,
+          contractABI,
+          signer
+        );
+
+        // Execute contract wave method
+        const waveTxn = await wavePortalContract.wave("Test wave");
+        console.log("Mining... ", waveTxn.hash);
+        await waveTxn.wait();
+
+        console.log("Mined -- ", waveTxn.hash);
+      } else {
+        console.log("Ethereum object doesn't exist!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  return { waves: allWaves, wave, isLoading };
 };
 
 export default useWaves;
