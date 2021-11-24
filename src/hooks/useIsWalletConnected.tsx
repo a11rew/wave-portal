@@ -4,11 +4,13 @@ interface Return {
   currentAccount: any;
   error: string | null;
   connectWallet: () => void;
+  isLoading: boolean;
 }
 
 const useIsWalletConnected = (): Return => {
   const [currentAccount, setCurrentAccount] = useState();
   const [error, setError] = useState<string | null>(null);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   useEffect(() => {
     try {
@@ -25,8 +27,10 @@ const useIsWalletConnected = (): Return => {
           const account = accounts[0] as any;
           console.log(`Found an authorized account ${account}`);
           setCurrentAccount(account);
+          setIsLoading(false);
         } else {
           console.log("No authorized account found");
+          setIsLoading(false);
         }
       });
     } catch (error) {
@@ -56,7 +60,7 @@ const useIsWalletConnected = (): Return => {
     }
   };
 
-  return { currentAccount, error, connectWallet };
+  return { currentAccount, error, connectWallet, isLoading };
 };
 
 export default useIsWalletConnected;
