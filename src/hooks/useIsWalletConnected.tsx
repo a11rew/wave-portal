@@ -19,26 +19,30 @@ const useIsWalletConnected = (): Return => {
 
       if (!ethereum) {
         console.log("You should install Metamask!");
-      } else console.log("We have the ethereum object!", ethereum);
+        setIsLoading(false);
+      } else {
+        console.log("We have the ethereum object!", ethereum);
 
-      // Check for wallet authorization
-      ethereum
-        .request({ method: "eth_accounts" })
-        .then((accounts: any) => {
-          if (accounts.length > 0) {
-            const account = accounts[0] as any;
-            console.log(`Found an authorized account ${account}`);
-            setCurrentAccount(account);
-            setIsLoading(false);
-          } else {
-            console.log("No authorized account found");
-            setIsLoading(false);
-          }
-        })
-        .catch((err) => console.log("Wallet not authorized", err));
+        // Check for wallet authorization
+        ethereum
+          .request({ method: "eth_accounts" })
+          .then((accounts: any) => {
+            if (accounts.length > 0) {
+              const account = accounts[0] as any;
+              console.log(`Found an authorized account ${account}`);
+              setCurrentAccount(account);
+              setIsLoading(false);
+            } else {
+              console.log("No authorized account found");
+              setIsLoading(false);
+            }
+          })
+          .catch((err) => console.log("Wallet not authorized", err));
+      }
     } catch (error) {
       console.error(error);
       setError(error as string);
+      setIsLoading(false);
     }
   }, []);
 
