@@ -32,6 +32,6 @@ const MessageList: React.FC = (): React.ReactElement => {
 
 export default MessageList;
 
-const truncate = (str: string) => {
+export const truncate = (str: string) => {
   return `${str.substr(0, 5)}...${str.substr(str.length - 5, 5)}`;
 };

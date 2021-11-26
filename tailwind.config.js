@@ -8,11 +8,18 @@ module.exports = {
       colors: {
         ...colors,
         heading: "#00f3ff",
+        primary: "#296073",
+        highlight: "#4c7e8f",
+      },
+      padding: {
+        xss: "0.12rem",
       },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      ringColor: ["hover", "active"],
+    },
   },
   plugins: [],
 };

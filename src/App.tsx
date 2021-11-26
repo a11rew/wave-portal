@@ -1,7 +1,9 @@
 import { useState } from "react";
 import MessageList from "./components/MessageList";
+import AccountDisplay from "./components/AccountDisplay";
+
 import useIsWalletConnected from "./hooks/useIsWalletConnected";
-// import useWaves from "./hooks/useWaves";
+import useWaves from "./hooks/useWaves";
 
 /** TODO
  * Display wallet info
@@ -15,23 +17,27 @@ import useIsWalletConnected from "./hooks/useIsWalletConnected";
 function App() {
   const { currentAccount, connectWallet, isLoading } = useIsWalletConnected();
   const [message, setMessage] = useState("");
-  // const { wave } = useWaves();
+  const { wave } = useWaves();
 
   /** Track error state */
   const errorState = message.length >= 140;
 
-  /** Handle wave */
-  const handleWave = (val: any): void => {
-    console.log(val);
-  };
-
   return (
-    <div className="flex flex-col items-center w-full mt-16 gap-10">
+    <div className="flex flex-col items-center w-full mt-16 gap-10 p-4">
       <div className="flex flex-col justify-center max-w-lg">
+        <div className="mb-8 flex justify-center">
+          {currentAccount && <AccountDisplay />}
+        </div>
         <div className="text-center text-4xl">👋 Hey there!</div>
-        <form onSubmit={handleWave} className="flex flex-col">
+        <form
+          onSubmit={(e) => {
+            e.preventDefault();
+            wave(message);
+          }}
+          className="flex flex-col"
+        >
           <label htmlFor="messageInput" className="text-center my-4">
-            Send{" "}
+            Andrew here, send{" "}
             <a href="https://a11rew.dev" className="underline text-heading">
               me
             </a>{" "}
@@ -39,9 +45,10 @@ function App() {
           </label>
           <textarea
             id="messageInput"
+            required
             value={message}
             onChange={(e) => setMessage(e.target.value)}
-            placeholder="Roadhouse"
+            placeholder="Roadhouse!"
             className="bg-transparent border border-opacity-30 rounded-md p-2"
           />
           <div className="flex text-sm mt-2 justify-between">
@@ -81,9 +88,11 @@ function App() {
           </button>
         )}
       </div>
-      <div className="max-w-xl">
-        <MessageList />
-      </div>
+      {currentAccount && (
+        <div className="max-w-xl">
+          <MessageList />
+        </div>
+      )}
     </div>
   );
 }
