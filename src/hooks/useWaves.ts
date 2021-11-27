@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { ethers } from "ethers";
 import { WavePortal } from "../types/WavePortal";
 import { contractABI, contractAddress } from "../utils/contractData";
+import toast from "react-hot-toast";
 
 interface Wave {
   address: string;
@@ -11,7 +12,8 @@ interface Wave {
 
 const useWaves = () => {
   const [allWaves, setAllWaves] = useState<Wave[]>([]);
-  const [isLoading, setIsLoading] = useState<Boolean>(true);
+  const [isLoading, setIsLoading] = useState(true);
+  const [waveLoading, setWaveLoading] = useState(false);
 
   const { ethereum } = window;
 
@@ -51,7 +53,7 @@ const useWaves = () => {
   }, [ethereum]);
 
   const wave = async (message: string) => {
-    console.log("I get called");
+    setWaveLoading(true);
     try {
       if (ethereum) {
         const provider = new ethers.providers.Web3Provider(ethereum as any);
@@ -74,8 +76,9 @@ const useWaves = () => {
         console.log("Ethereum object doesn't exist!");
       }
     } catch (error) {
-      console.log(error);
+      toast.error("Something went wrong, try again.");
     }
+    setWaveLoading(false);
   };
 
   // Listener for emitter events
@@ -113,7 +116,7 @@ const useWaves = () => {
     };
   }, [ethereum]);
 
-  return { waves: allWaves, wave, isLoading };
+  return { waves: allWaves, wave, isLoading, waveLoading };
 };
 
 export default useWaves;

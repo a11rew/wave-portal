@@ -9,7 +9,7 @@ const MessageList: React.FC = (): React.ReactElement => {
         <tr className="border-b border-opacity-20 text-heading">
           <th className="w-2/6 p-2 text-left">SENDER</th>
           <th className="w-3/5 p-2 text-left">MESSAGE</th>
-          <th className="w-2/6 p-2 text-left">RECEIVED AT</th>
+          <th className="w-2/6 p-2 text-left">RECEIVED</th>
         </tr>
       </thead>
       <tbody>

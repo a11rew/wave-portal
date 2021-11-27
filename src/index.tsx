@@ -5,6 +5,7 @@ import reportWebVitals from "./reportWebVitals";
 
 import "./index.css";
 import "@fontsource/inter";
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -5,9 +5,9 @@ import AccountDisplay from "./components/AccountDisplay";
 import useIsWalletConnected from "./hooks/useIsWalletConnected";
 import useWaves from "./hooks/useWaves";
 import { Toaster } from "react-hot-toast";
+import Loader from "react-loader-spinner";
 
 /** TODO
- * Loading on submit
  * Handle errors(Cooldown, failed auth etc)
  * Testing
  * Show message when no metamask
@@ -16,7 +16,7 @@ import { Toaster } from "react-hot-toast";
 function App() {
   const { currentAccount, connectWallet, isLoading } = useIsWalletConnected();
   const [message, setMessage] = useState("");
-  const { wave } = useWaves();
+  const { wave, waveLoading } = useWaves();
 
   /** Track error state */
   const errorState = message.length >= 140;
@@ -70,13 +70,22 @@ function App() {
             </div>
             {currentAccount && (
               <button
-                disabled={errorState}
-                className={`mt-4 p-2 rounded-md text-black bg-gray-300 transition-all duration-150 ease-in-out ${
-                  errorState && "opacity-40"
+                disabled={waveLoading || errorState}
+                className={`mt-4 p-2 flex justify-center rounded-md text-black bg-gray-300 transition-all duration-150 ease-in-out ${
+                  (waveLoading || errorState) && "opacity-40 cursor-not-allowed"
                 }`}
                 type="submit"
               >
-                Wave at Me
+                {waveLoading ? (
+                  <Loader
+                    type="TailSpin"
+                    color="#296073"
+                    width="24"
+                    height="24"
+                  />
+                ) : (
+                  "Wave at Me"
+                )}
               </button>
             )}
           </form>
