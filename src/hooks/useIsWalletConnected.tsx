@@ -33,7 +33,7 @@ const useIsWalletConnected = (): Return => {
               setIsLoading(false);
             }
           })
-          .catch((err) => console.log("Wallet not authorized", err));
+          .catch((err) => console.error("Wallet not authorized", err));
       }
     } catch (error) {
       console.error(error);

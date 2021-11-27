@@ -42,13 +42,12 @@ const useWaves = () => {
             );
             setIsLoading(false);
           })
-          .catch((err) => console.log("Error fetching waves", err));
+          .catch((err) => console.error("Error fetching waves", err));
       } else {
-        console.log("Ethereum object does not exist");
         setIsLoading(false);
       }
     } catch (err) {
-      console.log(err);
+      console.error(err);
       setIsLoading(false);
     }
   }, [ethereum]);
@@ -69,13 +68,10 @@ const useWaves = () => {
         const waveTxn = await wavePortalContract.wave(message, {
           gasLimit: 300000,
         });
-        console.log("Mining... ", waveTxn.hash);
         await waveTxn.wait();
-
-        console.log("Mined -- ", waveTxn.hash);
         toast.success("Nice! Message sent.");
       } else {
-        console.log("Ethereum object doesn't exist!");
+        return;
       }
     } catch (error: any) {
       console.error(1, error);
@@ -93,7 +89,6 @@ const useWaves = () => {
     let wavePortalContract: ethers.Contract;
 
     const onNewWave = (from: any, timestamp: any, message: string) => {
-      console.log("NewWave", from, timestamp, message);
       setAllWaves((prevState) => [
         ...prevState,
         {
