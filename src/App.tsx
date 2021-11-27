@@ -7,11 +7,6 @@ import useWaves from "./hooks/useWaves";
 import { Toaster } from "react-hot-toast";
 import Loader from "react-loader-spinner";
 
-/** TODO
- * Testing
- * Show message when no metamask
- */
-
 function App() {
   const { currentAccount, connectWallet, isLoading } = useIsWalletConnected();
   const [message, setMessage] = useState("");
@@ -41,7 +36,7 @@ function App() {
               <a href="https://a11rew.dev" className="underline text-heading">
                 me
               </a>{" "}
-              a message over the three webs
+              a message over the three webs.
             </label>
             <textarea
               id="messageInput"
@@ -52,7 +47,7 @@ function App() {
               className="bg-transparent border border-opacity-30 rounded-md p-2"
             />
             <div className="flex text-sm mt-2 justify-between">
-              <p className="pr-8"></p>
+              <p className="pr-8">You could win some ETH too :)</p>
               <div>
                 <p
                   className={`${
