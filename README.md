@@ -7,6 +7,7 @@ Wave at me over the three webs? Third nether? [Peter's third kick?](https://yout
 Built as part of a [\_buildspace](https://buildspace.so) project, Wave Portal lets you send a message saved in a smart contract on the Ethereum blockchain for all to see.
 
 ## Getting Started
+![localhost_3000_](https://user-images.githubusercontent.com/87580113/143688130-a917e306-0fd7-4e0a-8369-0d5033b1cc39.png)
 
 ### Contract Repository
 
