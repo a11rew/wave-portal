@@ -8,7 +8,6 @@ import { Toaster } from "react-hot-toast";
 import Loader from "react-loader-spinner";
 
 /** TODO
- * Handle errors(Cooldown, failed auth etc)
  * Testing
  * Show message when no metamask
  */
