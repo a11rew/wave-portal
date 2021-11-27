@@ -7,10 +7,8 @@ import useWaves from "./hooks/useWaves";
 import { Toaster } from "react-hot-toast";
 
 /** TODO
- * Display wallet info
- * Handle errors(Cooldown, failed auth etc)
  * Loading on submit
- * Update list after submit
+ * Handle errors(Cooldown, failed auth etc)
  * Testing
  * Show message when no metamask
  */

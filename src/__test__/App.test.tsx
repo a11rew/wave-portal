@@ -36,7 +36,7 @@ describe("User interactions after connect", () => {
     });
     render(<App />);
     const waveInput = await screen.findByLabelText(
-      "Send me a message over the three webs"
+      /Send me a message over the three webs/i
     );
     /** Add more than 140 characters to textarea */
     fireEvent.change(waveInput, {
