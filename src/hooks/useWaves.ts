@@ -3,6 +3,7 @@ import { ethers } from "ethers";
 import { WavePortal } from "../types/WavePortal";
 import { contractABI, contractAddress } from "../utils/contractData";
 import toast from "react-hot-toast";
+import { Logger } from "@ethersproject/logger";
 
 interface Wave {
   address: string;
@@ -72,11 +73,17 @@ const useWaves = () => {
         await waveTxn.wait();
 
         console.log("Mined -- ", waveTxn.hash);
+        toast.success("Nice! Message sent.");
       } else {
         console.log("Ethereum object doesn't exist!");
       }
-    } catch (error) {
-      toast.error("Something went wrong, try again.");
+    } catch (error: any) {
+      console.error(1, error);
+      if (error.code === Logger.errors.CALL_EXCEPTION) {
+        toast.error("Sorry, you're rate limited. Try again in 15 seconds");
+      } else {
+        toast.error("Something went wrong, try again.");
+      }
     }
     setWaveLoading(false);
   };

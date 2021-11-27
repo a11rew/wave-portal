@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import MetaMaskOnboarding from "@metamask/onboarding";
 
 interface Return {
   currentAccount: any;
@@ -18,22 +19,17 @@ const useIsWalletConnected = (): Return => {
       const { ethereum } = window;
 
       if (!ethereum) {
-        console.log("You should install Metamask!");
         setIsLoading(false);
       } else {
-        console.log("We have the ethereum object!", ethereum);
-
         // Check for wallet authorization
         ethereum
           .request({ method: "eth_accounts" })
           .then((accounts: any) => {
             if (accounts.length > 0) {
               const account = accounts[0] as any;
-              console.log(`Found an authorized account ${account}`);
               setCurrentAccount(account);
               setIsLoading(false);
             } else {
-              console.log("No authorized account found");
               setIsLoading(false);
             }
           })
@@ -52,7 +48,8 @@ const useIsWalletConnected = (): Return => {
       const { ethereum } = window;
 
       if (!ethereum) {
-        alert("Get Metamask ya bum");
+        const onboarding = new MetaMaskOnboarding();
+        onboarding.startOnboarding();
         return;
       }
 
@@ -60,7 +57,6 @@ const useIsWalletConnected = (): Return => {
         method: "eth_requestAccounts",
       });
 
-      console.log("Connected", accounts[0]);
       setCurrentAccount(accounts[0]);
     } catch (error) {
       console.error(error);
