@@ -47,7 +47,7 @@ function App() {
               className="bg-transparent border border-opacity-30 rounded-md p-2"
             />
             <div className="flex text-sm mt-2 justify-between">
-              <p className="pr-8">You could win some ETH too :)</p>
+              <p className="">You could win some ETH too :)</p>
               <div>
                 <p
                   className={`${
